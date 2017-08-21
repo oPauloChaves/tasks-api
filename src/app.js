@@ -11,7 +11,10 @@ const logger = require('koa-logger')
 const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
 
+const jwt = require('./middleware/jwt')
+const pagerMiddleware = require('./middleware/pager')
 const db = require('./middleware/database')
+
 const routes = require('./routes')
 
 if (!config.env.isTest) {
@@ -23,7 +26,10 @@ app.use(logger())
 
 app.use(db(app))
 app.use(cors(config.cors))
+app.use(jwt)
 app.use(bodyParser(config.bodyParser))
+
+app.use(pagerMiddleware)
 
 app.use(routes.routes())
 app.use(routes.allowedMethods())
