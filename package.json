@@ -1,0 +1,26 @@
+{
+  "name": "koa-mongo-api-starter",
+  "version": "0.0.1",
+  "description": "A boilerplate to get started with Koa, MongoDB and Docker",
+  "main": "index.js",
+  "author": "Paulo Chaves <opaulochaves@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=production node ./src/bin",
+    "dev": "NODE_ENV=development nodemon ./src/bin"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "http-shutdown": "^1.2.0",
+    "kcors": "^2.2.1",
+    "koa": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-helmet": "^3.2.0",
+    "koa-logger": "^3.0.1",
+    "koa-response-time": "^2.0.0",
+    "koa-router": "^7.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
