@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const passwd = require('../../utils/password')
+const bcrypt = require('bcrypt')
 const Schema = mongoose.Schema
 
 const UserSchema = new mongoose.Schema({
@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
     unique: true
   },
   password: {
-    type: Schema.Types.Mixed,
+    type: String,
     required: true
   },
   password_reset_expires: {
@@ -24,36 +24,44 @@ const UserSchema = new mongoose.Schema({
   }
 }, { timestamps: true })
 
-/**
- * see https://github.com/sahat/hackathon-starter
- */
-UserSchema.pre('save', function (next) {
+UserSchema.pre('save', async function (next) {
   const user = this
   if (!user.isModified('password')) {
     return next()
   }
-  const saltHash = passwd.saltHashPassword(user.password)
-  user.password = saltHash
+  user.password = await bcrypt.hash(user.password, 10)
   next()
 })
 
 UserSchema.methods = {
-  comparePassword (candidatePassword, cb) {
-    const isMatch = passwd.comparePassword(candidatePassword, this.password)
+  async comparePassword(candidatePassword, cb) {
+    const isMatch = await bcrypt.compare(body.user.password, user.password)
     cb(null, isMatch)
   }
 }
 
 UserSchema.statics = {
 
-  async get(id) {
+  async getById(id) {
     const user = await this.findById(id).exec()
 
     if (user) return user
 
-      let error = new Error('No such user exists!')
-      error.status = 404
-      return Promise.reject(error)
+    let error = new Error('No such user exists!')
+    error.status = 404
+    return Promise.reject(error)
+  },
+
+  async findByEmail(email) {
+    return await this.findOne({ email }).exec()
+  },
+
+  async list({ skip = 0, limit = 20 } = {}) {
+    return await this.find({}, {id: 1, name: 1, email: 1})
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .exec()
   }
 
 }
