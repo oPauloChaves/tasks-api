@@ -1,12 +1,12 @@
 require('dotenv').config()
-const { server: { port, host } } = require('../config')
+const { server: { port } } = require('../config')
 
 const app = require('../app')
 
 process.once('SIGINT', () => app.shutDown())
 process.once('SIGTERM', () => app.shutDown())
 
-app.server.listen(port, host)
+app.server.listen(port)
 
 app.server.on('error', onError)
 app.server.on('listening', onListening)

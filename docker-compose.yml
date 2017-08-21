@@ -5,7 +5,7 @@ services:
     image: mongo:3.4
     container_name: koaapi-db
     volumes:
-      - "data_mongo:/data/db"
+      - "data_koaapi:/data/db"
     ports:
       - "27017:27017"
     command: --smallfiles --rest
@@ -13,6 +13,7 @@ services:
   api:
     build:
       context: .
+    container_name: koaapi
     command: yarn run dev
     volumes:
       - .:/koa-mongo/api
@@ -25,4 +26,4 @@ services:
       - MONGODB_URI=mongo://mongo:27017/koaapi
 
 volumes:
-  data_mongo:
+  data_koaapi:
