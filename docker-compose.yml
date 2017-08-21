@@ -23,7 +23,7 @@ services:
       - mongo
     environment:
       - NODE_ENV=${NODE_ENV}
-      - MONGODB_URI=mongo://mongo:27017/koaapi
+      - MONGODB_URI=${MONGO_URI}
 
 volumes:
   data_koaapi:

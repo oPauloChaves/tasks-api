@@ -1,6 +1,7 @@
 const config = require('./config')
 const http = require('http')
 const Koa = require('koa')
+const mongoose = require('mongoose')
 
 const app = new Koa()
 
@@ -10,6 +11,7 @@ const logger = require('koa-logger')
 const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
 
+const db = require('./middleware/database')
 const routes = require('./routes')
 
 if (!config.env.isTest) {
@@ -19,6 +21,7 @@ if (!config.env.isTest) {
 
 app.use(logger())
 
+app.use(db(app))
 app.use(cors(config.cors))
 app.use(bodyParser(config.bodyParser))
 
@@ -39,12 +42,11 @@ app.shutDown = function shutDown() {
         err = error
       }
 
-      // this.db.destroy()
-      //   .catch(error => {
-      //     console.error(error)
-      //     err = error
-      //   })
-      //   .then(() => process.exit(err ? 1 : 0))
+      mongoose.connection.close(function () {
+        console.log('Mongoose default connection disconnected through app shutdown');
+        process.exit(err ? 1 : 0)
+      });
+
     })
   }
 }
