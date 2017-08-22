@@ -1,4 +1,3 @@
-const _ = require('lodash')
 const User = require('./model')
 
 module.exports = {
@@ -23,6 +22,8 @@ module.exports = {
 
     ctx.status = 201
     ctx.set('Location', `${ctx.request.url}/${user.id}`)
-    ctx.body = {user: _.pick(user, ['id', 'name', 'email'])}
+
+    const {id, name, email} = user
+    ctx.body = {user: {id, name, email}}
   }
 }
