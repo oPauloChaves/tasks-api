@@ -1,11 +1,16 @@
-const qs = require('qs')
-
+/**
+ * Set the params needed for pagination
+ *
+ * Examples
+ *
+ *    /users?page=2
+ *    /users?page=2&limit=10 (only 10 items per page)
+ *    /users?offset=5?limit=30
+ */
 module.exports = (ctx, next) => {
   if (ctx.method !== 'GET') {
     return next()
   }
-
-  ctx.query = qs.parse(ctx.querystring)
 
   const {query} = ctx
 
@@ -14,6 +19,9 @@ module.exports = (ctx, next) => {
 
   if (query.page) {
     query.page = parseInt(query.page, 10)
+    if (query.page < 1) {
+      query.page = 1
+    }
     query.skip = query.offset = (query.page - 1) * query.limit
   }
 

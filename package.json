@@ -24,7 +24,6 @@
     "koa-router": "^7.2.1",
     "lodash": "^4.17.4",
     "mongoose": "^4.11.7",
-    "qs": "^6.5.0",
     "yup": "^0.21.3"
   },
   "devDependencies": {
