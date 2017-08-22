@@ -9,7 +9,7 @@
     "start": "NODE_ENV=production node ./src/bin",
     "dev": "NODE_ENV=development nodemon ./src/bin",
     "lint": "eslint src --fix",
-    "test": "ava",
+    "test": "NODE_PATH=src ava",
     "test:watch": "npm test -- --watch"
   },
   "dependencies": {
@@ -37,6 +37,7 @@
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "mongomem": "^0.1.9",
     "nodemon": "^1.11.0"
   },
   "engines": {
