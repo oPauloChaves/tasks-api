@@ -8,7 +8,9 @@
   "scripts": {
     "start": "NODE_ENV=production node ./src/bin",
     "dev": "NODE_ENV=development nodemon ./src/bin",
-    "lint": "eslint src --fix"
+    "lint": "eslint src --fix",
+    "test": "ava",
+    "test:watch": "npm test -- --watch"
   },
   "dependencies": {
     "bcrypt": "^1.0.2",
@@ -28,6 +30,7 @@
     "yup": "^0.21.3"
   },
   "devDependencies": {
+    "ava": "^0.22.0",
     "eslint": "^4.5.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
