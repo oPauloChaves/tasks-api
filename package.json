@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "start": "NODE_ENV=production node ./src/bin",
-    "dev": "NODE_ENV=development nodemon ./src/bin"
+    "dev": "NODE_ENV=development nodemon ./src/bin",
+    "lint": "eslint src --fix"
   },
   "dependencies": {
     "bcrypt": "^1.0.2",
@@ -27,6 +28,15 @@
     "yup": "^0.21.3"
   },
   "devDependencies": {
+    "eslint": "^4.5.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
     "nodemon": "^1.11.0"
+  },
+  "engines": {
+    "node": ">= 7.6.0"
   }
 }

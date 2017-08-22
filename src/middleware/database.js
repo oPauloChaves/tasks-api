@@ -4,7 +4,6 @@ const config = require('../config')
 mongoose.Promise = global.Promise
 
 module.exports = (app) => {
-
   mongoose.connect(config.mongoURI, {
     useMongoClient: true,
     socketTimeoutMS: 0,
@@ -12,7 +11,7 @@ module.exports = (app) => {
     reconnectTries: 15
   })
     .then((conn) => {
-      console.log(`MongoDB connected on ${config.env.env} mode`);
+      console.log(`MongoDB connected on ${config.env.env} mode`)
     }).catch((err) => {
       console.error(err)
       process.exit(1)

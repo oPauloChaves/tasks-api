@@ -53,10 +53,9 @@ app.shutDown = function shutDown() {
       }
 
       mongoose.connection.close(function () {
-        console.log('Mongoose default connection disconnected through app shutdown');
+        console.log('Mongoose default connection disconnected through app shutdown')
         process.exit(err ? 1 : 0)
-      });
-
+      })
     })
   }
 }

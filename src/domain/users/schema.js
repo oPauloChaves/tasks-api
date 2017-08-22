@@ -18,7 +18,7 @@ const userSchema = yup.object().shape({
     .required()
     .max(40)
     .default('')
-    .trim(),
+    .trim()
 
 })
   .noUnknown()

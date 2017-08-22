@@ -11,5 +11,5 @@ module.exports = {
   NotFoundError, // 404
   ValidationError, // 422
   DuplicateKeyError, // 422
-  ServerError, // 500
+  ServerError // 500
 }

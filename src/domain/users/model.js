@@ -37,16 +37,15 @@ UserSchema.pre('save', async function (next) {
 
 UserSchema.post('save', function(error, doc, next) {
   if (error.name === 'MongoError' && error.code === 11000) {
-    next(new DuplicateKeyError(`email;email ${doc.email} has already been taken.`));
+    next(new DuplicateKeyError(`email;email ${doc.email} has already been taken.`))
   } else {
-    next(error);
+    next(error)
   }
-});
-
+})
 
 UserSchema.methods = {
   async passwordMatches(rawPassword) {
-    return await bcrypt.compare(rawPassword, this.password)
+    return bcrypt.compare(rawPassword, this.password)
   }
 }
 
@@ -63,11 +62,11 @@ UserSchema.statics = {
   },
 
   async findByEmail(email) {
-    return await this.findOne({ email }).exec()
+    return this.findOne({ email }).exec()
   },
 
   async list({ skip = 0, limit = 20 } = {}) {
-    return await this.find({}, {id: 1, name: 1, email: 1})
+    return this.find({}, {id: 1, name: 1, email: 1})
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)

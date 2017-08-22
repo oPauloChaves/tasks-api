@@ -1,5 +1,4 @@
 const Router = require('koa-router')
-const jwt = require('koa-jwt')
 const ctrl = require('./controller')
 const {getAuth} = require('../../lib/helpers')
 

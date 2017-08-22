@@ -40,7 +40,7 @@ module.exports = {
     const {body} = ctx.request
     let {user = {}} = body
 
-    login = await ctx.app.schemas.login.validate(user, {abortEarly: false})
+    user = await ctx.app.schemas.login.validate(user, {abortEarly: false})
 
     const existingUser = await User.findByEmail(user.email)
 

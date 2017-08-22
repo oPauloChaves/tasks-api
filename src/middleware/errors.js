@@ -36,7 +36,7 @@ module.exports = async (ctx, next) => {
         break
       }
 
-      case err instanceof errors.UnauthorizedError || err.status == 401: {
+      case err instanceof errors.UnauthorizedError || err.status === 401: {
         ctx.body.errors = formatException(err)
         ctx.status = err.status || 401
         break
@@ -92,7 +92,7 @@ function formatException(err) {
   const idx = err.message.indexOf(';')
   if (idx !== -1) {
     path = err.message.substring(0, idx)
-    message = err.message.substring(idx+1)
+    message = err.message.substring(idx + 1)
     return {[path]: message}
   }
   return message
