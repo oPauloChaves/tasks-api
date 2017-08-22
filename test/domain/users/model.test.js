@@ -15,11 +15,14 @@ test.after.always('cleanup', t => {
 })
 
 test.beforeEach(async t => {
+  // create a local instance for isolated tests
   const db = new mongoose.Mongoose()
   await db.connect(await MongoDBServer.getConnectionString(), {useMongoClient: true})
 
+  // copy user schema from global instance to local instance
   db.model('User', User.schema)
 
+  // make local instance available to the tests
   t.context.db = db
 })
 
