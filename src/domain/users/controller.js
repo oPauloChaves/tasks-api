@@ -4,7 +4,7 @@ const {NotFoundError, UnauthorizedError} = require('../../lib/errors')
 
 module.exports = {
 
-  async get (ctx) {
+  async list(ctx) {
     const {skip, limit} = ctx.query
 
     const users = await User.list({skip, limit})
@@ -12,6 +12,9 @@ module.exports = {
     ctx.body = {users}
   },
 
+  /**
+   * Registers a new user and logs him in by returnin a token
+   */
   async register(ctx) {
     const {body} = ctx.request
     let {user = {}} = body
@@ -29,6 +32,10 @@ module.exports = {
     ctx.body = {token}
   },
 
+  /**
+   * Logs in a user by checking if the given email and password matches,
+   * then return a token if email and password match
+   */
   async login(ctx) {
     const {body} = ctx.request
     let {user = {}} = body

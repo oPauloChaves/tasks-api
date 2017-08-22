@@ -1,8 +1,6 @@
 const http = require('http')
-
 const errors = require('../lib/errors')
 let constants = require('../lib/constants')
-// const _ = require('lodash')
 
 Object.entries(http.STATUS_CODES).forEach(([key, value]) => {
   constants.HTTP[key] = value
@@ -22,7 +20,7 @@ module.exports = async (ctx, next) => {
     if (!ctx.response.body) {
       ctx.response.body = { errors: {} }
     }
-    // ctx.app.emit('error', err, ctx);
+
     console.error(err)
 
     switch (true) {
@@ -38,7 +36,7 @@ module.exports = async (ctx, next) => {
         break
       }
 
-      case err instanceof errors.UnauthorizedError: {
+      case err instanceof errors.UnauthorizedError || err.status == 401: {
         ctx.body.errors = formatException(err)
         ctx.status = err.status || 401
         break
@@ -68,6 +66,26 @@ function formatValidationError(err) {
   return result
 }
 
+/**
+ * Format the given `err` before sending it out to the client
+ *
+ * It checks if the error message is in the following format:
+ *
+ * `Name;Some error message`
+ *
+ * It tries to extract the content before `;`, if it succeeds,
+ * it builds an object where the first part is the key and
+ * the remaining is the value.
+ *
+ * `{key: value}`
+ *
+ * If the error doesn't attend the above format, then it just
+ * returns the message
+ *
+ * @param {Error}  err The error thrown
+ * @return {Object|String} An object if the message is in the explained format
+ *                         or just a string if not
+ */
 function formatException(err) {
   let path = 'unknown'
   let message = err.message
