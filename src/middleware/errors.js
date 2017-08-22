@@ -33,14 +33,14 @@ module.exports = async (ctx, next) => {
       }
 
       case err instanceof errors.DuplicateKeyError: {
-        let path = 'unknown'
-        const idx = err.message.indexOf(';')
-        if (idx !== -1) {
-          path = err.message.substring(0, idx)
-          ctx.body.errors[path] = err.message.substring(idx + 1)
-        }
-
+        ctx.body.errors = formatException(err)
         ctx.status = err.status || 422
+        break
+      }
+
+      case err instanceof errors.UnauthorizedError: {
+        ctx.body.errors = formatException(err)
+        ctx.status = err.status || 401
         break
       }
 
@@ -66,4 +66,16 @@ function formatValidationError(err) {
       .reduce((prev, curr) => (Object.assign(prev, curr)), result)
   }
   return result
+}
+
+function formatException(err) {
+  let path = 'unknown'
+  let message = err.message
+  const idx = err.message.indexOf(';')
+  if (idx !== -1) {
+    path = err.message.substring(0, idx)
+    message = err.message.substring(idx+1)
+    return {[path]: message}
+  }
+  return message
 }

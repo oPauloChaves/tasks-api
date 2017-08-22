@@ -23,4 +23,22 @@ const userSchema = yup.object().shape({
 })
   .noUnknown()
 
-module.exports = userSchema
+const loginSchema = yup.object().shape({
+
+  email: yup.string()
+    .required()
+    .email()
+    .lowercase()
+    .trim(),
+
+  password: yup.string()
+    .required()
+    .trim()
+
+})
+  .noUnknown()
+
+module.exports = {
+  userSchema,
+  loginSchema
+}

@@ -45,9 +45,8 @@ UserSchema.post('save', function(error, doc, next) {
 
 
 UserSchema.methods = {
-  async comparePassword(candidatePassword, cb) {
-    const isMatch = await bcrypt.compare(body.user.password, user.password)
-    cb(null, isMatch)
+  async passwordMatches(rawPassword) {
+    return await bcrypt.compare(rawPassword, this.password)
   }
 }
 

@@ -1,7 +1,8 @@
-const user = require('./users/schema')
+const {loginSchema, userSchema} = require('./users/schema')
 
 module.exports = (app) => {
   app.schemas = {
-    user
+    user: userSchema,
+    login: loginSchema
   }
 }
