@@ -1,37 +1,28 @@
+const _ = require('lodash')
 const User = require('./model')
 
 module.exports = {
 
   async get (ctx) {
     const {skip, limit} = ctx.query
-    try {
-      const users = await User.list({skip, limit})
-      ctx.body = {users}
-    } catch (error) {
-      ctx.throw(500, error)
-    }
+
+    const users = await User.list({skip, limit})
+
+    ctx.body = {users}
   },
 
   async register(ctx) {
-    const {body: {user}} = ctx.request
+    const {body} = ctx.request
+    let {user = {}} = body
 
-    const existingUser = await User.findByEmail(user.email)
-    if (existingUser) {
-      ctx.throw(422, 'Email already taken')
-    }
+    const opts = {abortEarly: false, context: {validatePassword: true}}
 
-    const newUser = new User(user)
+    user = await ctx.app.schemas.user.validate(user, opts)
 
-    let err = newUser.validateSync()
-    if (err) {
-      ctx.throw(422, 'validation failed', err.errors)
-    }
+    user = await new User(user).save()
 
-    try {
-      const dbUser = await newUser.save()
-      ctx.body = {user: dbUser}
-    } catch (error) {
-      ctx.throw(500, error)
-    }
+    ctx.status = 201
+    ctx.set('Location', `${ctx.request.url}/${user.id}`)
+    ctx.body = {user: _.pick(user, ['id', 'name', 'email'])}
   }
 }

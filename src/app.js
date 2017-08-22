@@ -12,10 +12,13 @@ const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
 
 const jwt = require('./middleware/jwt')
+const errors = require('./middleware/errors')
 const pagerMiddleware = require('./middleware/pager')
 const db = require('./middleware/database')
 
 const routes = require('./routes')
+
+require('./domain/schemas')(app)
 
 if (!config.env.isTest) {
   app.use(responseTime())
@@ -24,6 +27,7 @@ if (!config.env.isTest) {
 
 app.use(logger())
 
+app.use(errors)
 app.use(db(app))
 app.use(cors(config.cors))
 app.use(jwt)

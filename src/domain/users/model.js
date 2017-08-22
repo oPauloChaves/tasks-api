@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const {DuplicateKeyError} = require('../../lib/errors')
+
 const Schema = mongoose.Schema
 
 const UserSchema = new mongoose.Schema({
@@ -32,6 +34,15 @@ UserSchema.pre('save', async function (next) {
   user.password = await bcrypt.hash(user.password, 10)
   next()
 })
+
+UserSchema.post('save', function(error, doc, next) {
+  if (error.name === 'MongoError' && error.code === 11000) {
+    next(new DuplicateKeyError(`email;email ${doc.email} has already been taken.`));
+  } else {
+    next(error);
+  }
+});
+
 
 UserSchema.methods = {
   async comparePassword(candidatePassword, cb) {
