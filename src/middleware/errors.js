@@ -46,10 +46,6 @@ module.exports = async (ctx, next) => {
         ctx.status = err.status || 500
         break
     }
-  } finally {
-    if (ctx.body && !ctx.body.code) {
-      ctx.body.code = constants.HTTP[String(ctx.status)]
-    }
   }
 }
 

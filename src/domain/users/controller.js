@@ -9,7 +9,7 @@ module.exports = {
 
     const users = await User.list({skip, limit})
 
-    ctx.body = {users}
+    ctx.body = users
   },
 
   /**
@@ -30,6 +30,28 @@ module.exports = {
 
     const token = generateToken(user)
     ctx.body = {token}
+  },
+
+  async update(ctx) {
+    const {body} = ctx.request
+    let {user = {}} = body
+
+    const opts = {abortEarly: false, context: {validatePassword: true}}
+
+    user = await ctx.app.schemas.user.validate(user, opts)
+
+    const userId = ctx.state.user.id
+    const existingUser = await User.getById(userId)
+
+    existingUser.name = user.name
+    existingUser.save()
+
+    ctx.status = 200
+    ctx.body = {
+      id: existingUser.id,
+      name: existingUser.name,
+      email: existingUser.email
+    }
   },
 
   /**
