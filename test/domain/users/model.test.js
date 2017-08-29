@@ -49,3 +49,23 @@ test('it should create a user', async t => {
 
   t.is(data.email, user.email)
 })
+
+test('it should update the user profile', async t => {
+  const {db} = t.context
+  const UserModel = db.model('User')
+
+  const data = {
+    email: 'bot1@test.com',
+    password: '12345678',
+    name: 'I am a bot'
+  }
+
+  const user = await new UserModel(data).save()
+  t.is(data.email, user.email)
+
+  const newData = {
+    name: 'A new name'
+  }
+  await user.updateProfile(newData)
+  t.is(newData.name, user.name)
+})

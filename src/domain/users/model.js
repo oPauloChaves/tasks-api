@@ -46,6 +46,11 @@ UserSchema.post('save', function(error, doc, next) {
 UserSchema.methods = {
   async passwordMatches(rawPassword) {
     return bcrypt.compare(rawPassword, this.password)
+  },
+
+  async updateProfile({name}) {
+    this.name = name
+    return this.save()
   }
 }
 

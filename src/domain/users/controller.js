@@ -43,8 +43,7 @@ module.exports = {
     const userId = ctx.state.user.id
     const existingUser = await User.getById(userId)
 
-    existingUser.name = user.name
-    existingUser.save()
+    await existingUser.updateProfile(user)
 
     ctx.status = 200
     ctx.body = {
