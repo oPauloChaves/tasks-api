@@ -47,7 +47,7 @@ Command             | Action                   |
 
 ## Docker support
 
-You don't have install and configure MongoDB and run each service (API and Mongo) in a separate window. Docker handles al that for you. You just need to run:
+You don't have install and configure MongoDB and run each service (API and MongoDB) in a separate window. Docker handles all that for you. You just need to run:
 
 ```sh
 $ docker-compose build --force-rm   # Build the services and remove intermediate containers
