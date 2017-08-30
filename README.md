@@ -1,6 +1,6 @@
 # koa-mongo-api-starter
 
-A boilerplate to get started with Koa, MongoDB and Docker
+A boilerplate to get started building a REST API with Koa, MongoDB and Docker
 
 ## This boilerplate includes
 
