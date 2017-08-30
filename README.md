@@ -43,7 +43,7 @@ Command             | Action                   |
 `yarn start`        | Run in production mode   |
 `yarn test`         | Run the tests once       |
 `yarn test:watch`   | Run and watch the tests  |
-`yarn run lint`     | List the code            |
+`yarn run lint`     | Lint the code            |
 
 ## Docker support
 
