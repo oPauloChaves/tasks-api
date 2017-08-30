@@ -28,6 +28,9 @@ A boilerplate to get started building a REST API with Koa, MongoDB and Docker
 # clone into project-name and remove the .git dir
 $ git clone --depth=1 https://github.com/oPauloChaves/koa-mongo-api-starter.git project-name && cd project-name && rm -rf .git
 
+# Create a .env file
+$ cp .env.example .env
+
 # Get dependencies with Yarn
 $ yarn install
 
