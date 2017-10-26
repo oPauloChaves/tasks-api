@@ -1,16 +1,21 @@
 {
-  "name": "koa-mongo-api-starter",
-  "version": "0.0.1",
-  "description": "A boilerplate to get started with Koa, MongoDB and Docker",
+  "name": "tasks-api",
+  "version": "0.1.0",
+  "description": "A Task Manager REST API",
   "main": "index.js",
-  "author": "Paulo Chaves <opaulochaves@gmail.com>",
+  "author": {
+    "name": "Paulo Chaves",
+    "email": "opaulochaves@gmail.com",
+    "url": "opaulochaves.github.io"
+  },
   "license": "MIT",
   "scripts": {
     "start": "NODE_ENV=production node ./src/bin",
     "dev": "NODE_ENV=development nodemon ./src/bin",
     "lint": "eslint src --fix",
     "test": "NODE_PATH=src ava",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "format": "prettier --write \"./src/**/*.js\""
   },
   "dependencies": {
     "bcrypt": "^1.0.2",
@@ -31,16 +36,25 @@
   },
   "devDependencies": {
     "ava": "^0.22.0",
-    "eslint": "^4.5.0",
+    "eslint": "^4.9.0",
     "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.1.1",
-    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "mongomem": "^0.1.9",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "prettier": "^1.7.4"
   },
   "engines": {
     "node": ">= 8.0.0"
+  },
+  "prettier": {
+    "singleQuote": false,
+    "printWidth": 80,
+    "semi": false,
+    "trailingComma": "all",
+    "bracketSpacing": false,
+    "jsxBracketSameLine": true
   }
 }

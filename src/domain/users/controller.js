@@ -1,9 +1,8 @@
-const User = require('./model')
-const {generateToken} = require('../../lib/helpers')
-const {NotFoundError, UnauthorizedError} = require('../../lib/errors')
+const User = require("./model")
+const {generateToken} = require("../../lib/helpers")
+const {NotFoundError, UnauthorizedError} = require("../../lib/errors")
 
 module.exports = {
-
   async list(ctx) {
     const {skip, limit} = ctx.query
 
@@ -26,7 +25,7 @@ module.exports = {
     user = await new User(user).save()
 
     ctx.status = 201
-    ctx.set('Location', `${ctx.URL}/${user.id}`)
+    ctx.set("Location", `${ctx.URL}/${user.id}`)
 
     const token = generateToken(user)
     ctx.body = {token}
@@ -49,7 +48,7 @@ module.exports = {
     ctx.body = {
       id: existingUser.id,
       name: existingUser.name,
-      email: existingUser.email
+      email: existingUser.email,
     }
   },
 
@@ -70,10 +69,10 @@ module.exports = {
     }
 
     if (!await existingUser.passwordMatches(user.password)) {
-      throw new UnauthorizedError(`Email or password is invalid`)
+      throw new UnauthorizedError("Email or password is invalid")
     }
 
     const token = generateToken(existingUser)
     ctx.body = {token}
-  }
+  },
 }

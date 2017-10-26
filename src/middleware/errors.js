@@ -1,11 +1,9 @@
-const http = require('http')
-const errors = require('../lib/errors')
-let constants = require('../lib/constants')
+const http = require("http")
+const errors = require("../lib/errors")
+let constants = require("../lib/constants")
 
 Object.entries(http.STATUS_CODES).forEach(([key, value]) => {
-  constants.HTTP[key] = value
-    .toUpperCase()
-    .replace(/\s/igm, '_')
+  constants.HTTP[key] = value.toUpperCase().replace(/\s/gim, "_")
 })
 
 module.exports = async (ctx, next) => {
@@ -15,10 +13,10 @@ module.exports = async (ctx, next) => {
       ctx.throw(404)
     }
   } catch (err) {
-    ctx.type = 'application/json'
+    ctx.type = "application/json"
 
     if (!ctx.response.body) {
-      ctx.response.body = { errors: {} }
+      ctx.response.body = {errors: {}}
     }
 
     console.error(err)
@@ -52,12 +50,12 @@ module.exports = async (ctx, next) => {
 function formatValidationError(err) {
   const result = {}
   if (err.path) {
-    result[err.path] = err.message || 'is not valid'
+    result[err.path] = err.message || "is not valid"
   }
   if (err.inner && err.inner.length > 0) {
     err.inner
       .map(err => formatValidationError(err))
-      .reduce((prev, curr) => (Object.assign(prev, curr)), result)
+      .reduce((prev, curr) => Object.assign(prev, curr), result)
   }
   return result
 }
@@ -83,9 +81,9 @@ function formatValidationError(err) {
  *                         or just a string if not
  */
 function formatException(err) {
-  let path = 'unknown'
+  let path = "unknown"
   let message = err.message
-  const idx = err.message.indexOf(';')
+  const idx = err.message.indexOf(";")
   if (idx !== -1) {
     path = err.message.substring(0, idx)
     message = err.message.substring(idx + 1)

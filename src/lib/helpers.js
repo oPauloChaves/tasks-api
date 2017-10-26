@@ -1,9 +1,8 @@
-const jwt = require('jsonwebtoken')
-const koaJWT = require('koa-jwt')
-const {jwtSecret, jwtOptions, env} = require('../config')
+const jwt = require("jsonwebtoken")
+const koaJWT = require("koa-jwt")
+const {jwtSecret, jwtOptions, env} = require("../config")
 
 module.exports = {
-
   generateToken(user) {
     const {id, email} = user
     const token = jwt.sign({id, email}, jwtSecret, jwtOptions)
@@ -17,6 +16,5 @@ module.exports = {
   getAuth() {
     const auth = koaJWT({secret: jwtSecret, debug: !env.isProd})
     return auth
-  }
-
+  },
 }

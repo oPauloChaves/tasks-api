@@ -8,7 +8,7 @@
  *    /users?offset=5?limit=30
  */
 module.exports = (ctx, next) => {
-  if (ctx.method !== 'GET') {
+  if (ctx.method !== "GET") {
     return next()
   }
 

@@ -5,8 +5,10 @@
     "node": true
   },
   "rules": {
+    "quotes": ["error", "double"],
     "semi": [2, "never"],
-    "max-len": [2, 100, 2],
-    "space-before-function-paren": "off"
+    "react/prop-types": "off",
+    "space-before-function-paren": "off",
+    "comma-dangle": ["error", "always-multiline"]
   }
 }
