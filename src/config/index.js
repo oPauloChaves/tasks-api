@@ -7,7 +7,7 @@ const {
   PORT = 8080,
   HOST = 'localhost',
   JWT_SECRET = 'unGu3sSaBlE',
-  MONGO_URI = 'mongodb://mongo:27017/koaapi'
+  MONGO_URI = 'mongodb://mongo:27017/tasks'
 } = process.env
 
 const isProd = NODE_ENV === 'production'
